@@ -9,5 +9,6 @@ class User(BaseModel):
 
 class Response(BaseModel):
     status: str
+    user: User
     timestamp: str
     cat_fact: str

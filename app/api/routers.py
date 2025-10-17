@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from app.infastructure.models import Response, User
 from app.application.service import CatFactService
+from datetime import datetime
 
 router = APIRouter(tags=["Profile"])
 
@@ -25,6 +26,8 @@ async def get_my_profile(
     
     # 3. Combine and return
     return Response(
+        status="success", # Example status
         user=user_data,
+        timestamp=datetime.now().isoformat(), # You need to import datetime
         cat_fact=dynamic_fact,
     )
