@@ -1,20 +1,15 @@
-# app/services/cat_fact_service.py
 import httpx
 from fastapi import HTTPException, Depends
 from app.config import settings
 from app.infastructure.external import CatFact
 
 
-# Dependency: Async HTTP client setup
-# We use a dependency to manage the client's lifecycle
 def get_http_client():
     """Initializes and yields an httpx.AsyncClient."""
-    client = httpx.AsyncClient(timeout=10)  # Set a reasonable timeout
+    client = httpx.AsyncClient(timeout=10)  
     try:
         yield client
     finally:
-        # Note: In a larger app, you might pass the client to the router/service and close it on shutdown.
-        # For simple dependency injection, the client is usually defined globally or managed by startup/shutdown events.
         pass
 
 
@@ -28,7 +23,7 @@ class CatFactService:
         try:
             # 1. Make the external API call
             response = await self.client.get(self.api_url)
-            response.raise_for_status()  # Raises HTTPStatusError for 4xx/5xx responses
+            response.raise_for_status()  
 
             # 2. Validate/parse the external response using Pydantic
             fact_data = CatFact.model_validate(response.json())
